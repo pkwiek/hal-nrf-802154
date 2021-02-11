@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2021, Nordic Semiconductor ASA
  * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,7 +14,7 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
  *    contributors may be used to endorse or promote products derived from this
  *    software without specific prior written permission.
  *
@@ -27,62 +29,72 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- */
-
-/**
- * @brief Module that defines the Thermometer Abstraction Layer for the 802.15.4 driver.
  *
  */
 
-#ifndef NRF_802154_TEMPERATURE_H_
-#define NRF_802154_TEMPERATURE_H_
+/**
+ * @file
+ *   This file implements the pseudo-random number generator abstraction layer.
+ *
+ * This pseudo-random number abstraction layer uses newlib's rand_r() function.
+ *
+ */
 
-#include <stdbool.h>
+#define _POSIX_C_SOURCE 1 // Enable access to POSIX functions (rand_r is not from the std library)
+
+#include "nrf_802154_random.h"
+
+#include <stdlib.h>
 #include <stdint.h>
 
-#ifdef __cplusplus
-extern "C" {
+#include "nrf.h"
+
+#if RAAL_SOFTDEVICE
+
+#if defined (__GNUC__)
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wreturn-type\"")
+_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")
+_Pragma("GCC diagnostic ignored \"-Wpedantic\"")
 #endif
 
-/**
- * @defgroup nrf_802154_temperature Thermometer Abstraction Layer for the 802.15.4 driver
- * @{
- * @ingroup nrf_802154_temperature
- * @brief The Thermometer Abstraction Layer interface for the 802.15.4 driver.
- *
- * The Thermometer Abstraction Layer is an abstraction layer of the thermometer that is used
- * to correct RSSI, LQI and ED measurements, and the CCA threshold value.
- *
- */
+#include <nrf_soc.h>
 
-/**
- * @brief Initializes the thermometer.
- */
-void nrf_802154_temperature_init(void);
+#if defined (__GNUC__)
+_Pragma("GCC diagnostic pop")
+#endif
 
-/**
- * @brief Deinitializes the thermometer.
- */
-void nrf_802154_temperature_deinit(void);
+#endif // RAAL_SOFTDEVICE
 
-/**
- * @brief Gets the current temperature.
- *
- * @returns Current temperature, in centigrades (C).
- */
-int8_t nrf_802154_temperature_get(void);
+unsigned int m_seed;
 
-/**
- * @brief Callback function executed when the temperature changes.
- */
-extern void nrf_802154_temperature_changed(void);
+void nrf_802154_random_init(void)
+{
+#if RAAL_SOFTDEVICE
+    uint32_t result;
 
-/**
- *@}
- **/
+    do
+    {
+        result = sd_rand_application_vector_get((uint8_t *)&m_seed, sizeof(m_seed));
+    }
+    while (result != NRF_SUCCESS);
+#else // RAAL_SOFTDEVICE
+    NRF_RNG->TASKS_START = 1;
 
-#ifdef __cplusplus
+    while (!NRF_RNG->EVENTS_VALRDY);
+    NRF_RNG->EVENTS_VALRDY = 0;
+    NRF_RNG->TASKS_STOP    = 1;
+
+    m_seed = NRF_RNG->VALUE;
+#endif // RAAL_SOFTDEVICE
 }
-#endif
 
-#endif /* NRF_802154_TEMPERATURE_H_ */
+void nrf_802154_random_deinit(void)
+{
+    // Intentionally empty
+}
+
+uint32_t nrf_802154_random_get(void)
+{
+    return (uint32_t)rand_r(&m_seed);
+}

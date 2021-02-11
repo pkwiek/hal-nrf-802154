@@ -1,4 +1,5 @@
 set(NRF_802154_DRIVER_INCLUDE_DIRS
+  #TODO why is that?
   ${NRF_802154_DRIVER_ROOT}/src/platform/random
 )
 
@@ -26,7 +27,7 @@ set(NRF_802154_DRIVER_SOURCES_COMMON
   ${NRF_802154_DRIVER_ROOT}/src/mac_features/ack_generator/nrf_802154_ack_generator.c
   ${NRF_802154_DRIVER_ROOT}/src/mac_features/ack_generator/nrf_802154_enh_ack_generator.c
   ${NRF_802154_DRIVER_ROOT}/src/mac_features/ack_generator/nrf_802154_imm_ack_generator.c
-  ${NRF_802154_DRIVER_ROOT}/src/platform/temperature/nrf_802154_temperature_none.c
+  ${NRF_802154_DRIVER_ROOT}/platform/temperature/nrf_802154_temperature_none.c
   )
 
 set(NRF_802154_DRIVER_SOURCES_NRF52

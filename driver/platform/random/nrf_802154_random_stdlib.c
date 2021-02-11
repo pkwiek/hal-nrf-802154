@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2017 - 2021, Nordic Semiconductor ASA
  * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,7 +14,7 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
  *    contributors may be used to endorse or promote products derived from this
  *    software without specific prior written permission.
  *
@@ -27,34 +29,72 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
 /**
  * @file
- *   This file implements the thermometer abstraction stub that does not use thermometer.
+ *   This file implements the pseudo-random number generator abstraction layer.
  *
- * This thermometer abstraction will cause RSSI, LQI, ED, CCA threshold errors up to 3 dBm when
- * temperature of device differs more than 5 C from 20 C.
+ * This pseudo-random number abstraction layer uses standard library rand() function.
  *
  */
 
-#include "nrf_802154_temperature.h"
+#include "nrf_802154_random.h"
 
+#include <stdlib.h>
 #include <stdint.h>
 
-#define DEFAULT_TEMPERATURE 20 ///< Default temperature reported by this driver stub [C].
+#include "nrf.h"
 
-void nrf_802154_temperature_init(void)
+#if RAAL_SOFTDEVICE
+
+#if defined (__GNUC__)
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wreturn-type\"")
+_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")
+_Pragma("GCC diagnostic ignored \"-Wpedantic\"")
+#endif
+
+#include <nrf_soc.h>
+
+#if defined (__GNUC__)
+_Pragma("GCC diagnostic pop")
+#endif
+
+#endif // RAAL_SOFTDEVICE
+
+void nrf_802154_random_init(void)
+{
+    uint32_t seed;
+
+#if RAAL_SOFTDEVICE
+    uint32_t result;
+
+    do
+    {
+        result = sd_rand_application_vector_get((uint8_t *)&seed, sizeof(seed));
+    }
+    while (result != NRF_SUCCESS);
+#else // RAAL_SOFTDEVICE
+    NRF_RNG->TASKS_START = 1;
+
+    while (!NRF_RNG->EVENTS_VALRDY);
+    NRF_RNG->EVENTS_VALRDY = 0;
+    NRF_RNG->TASKS_STOP    = 1;
+
+    seed = NRF_RNG->VALUE;
+#endif // RAAL_SOFTDEVICE
+
+    srand((unsigned int)seed);
+}
+
+void nrf_802154_random_deinit(void)
 {
     // Intentionally empty
 }
 
-void nrf_802154_temperature_deinit(void)
+uint32_t nrf_802154_random_get(void)
 {
-    // Intentionally empty
-}
-
-int8_t nrf_802154_temperature_get(void)
-{
-    return DEFAULT_TEMPERATURE;
+    return (uint32_t)rand();
 }

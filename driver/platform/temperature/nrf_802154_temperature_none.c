@@ -33,54 +33,31 @@
  */
 
 /**
- * @brief Module that contains buffer for frames received by the nRF 802.15.4 radio driver.
+ * @file
+ *   This file implements the thermometer abstraction stub that does not use thermometer.
+ *
+ * This thermometer abstraction will cause RSSI, LQI, ED, CCA threshold errors up to 3 dBm when
+ * temperature of device differs more than 5 C from 20 C.
  *
  */
 
-#ifndef NRF_802154_RX_BUFFER_H_
-#define NRF_802154_RX_BUFFER_H_
+#include "nrf_802154_temperature.h"
 
-#include <stdbool.h>
 #include <stdint.h>
 
-#include "nrf_802154_const.h"
+#define DEFAULT_TEMPERATURE 20 ///< Default temperature reported by this driver stub [C].
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/**
- * @brief Structure that contains the received frame.
- */
-typedef struct
+void nrf_802154_temperature_init(void)
 {
-    uint8_t data[MAX_PACKET_SIZE + 1];
-    bool    free; // If this buffer is free or contains a frame.
-} rx_buffer_t;
-
-/**
- * @brief Array that contains all buffers used to receive frame.
- *
- * This array is in the global scope to allow optimizations in the core module if there is only
- * one buffer provided by this module.
- *
- */
-extern rx_buffer_t nrf_802154_rx_buffers[];
-
-/**
- * @brief Initializes the buffer for received frames.
- */
-void nrf_802154_rx_buffer_init(void);
-
-/**
- * @brief Gets a free buffer to receive a frame.
- *
- * @returns  Pointer to a free buffer, or NULL if no free buffer is available.
- */
-rx_buffer_t * nrf_802154_rx_buffer_free_find(void);
-
-#ifdef __cplusplus
+    // Intentionally empty
 }
-#endif
 
-#endif /* NRF_802154_RX_BUFFER_H_ */
+void nrf_802154_temperature_deinit(void)
+{
+    // Intentionally empty
+}
+
+int8_t nrf_802154_temperature_get(void)
+{
+    return DEFAULT_TEMPERATURE;
+}

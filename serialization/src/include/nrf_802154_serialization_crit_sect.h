@@ -1,6 +1,8 @@
 /*
- * Copyright (c) 2017 - 2020, Nordic Semiconductor ASA
+ * Copyright (c) 2021, Nordic Semiconductor ASA
  * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -12,7 +14,7 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * 3. Neither the name of the copyright holder nor the names of its
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
  *    contributors may be used to endorse or promote products derived from this
  *    software without specific prior written permission.
  *
@@ -27,71 +29,31 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
 /**
- * @file
- *   This file implements the pseudo-random number generator abstraction layer.
- *
- * This pseudo-random number abstraction layer uses standard library rand() function.
- *
+ * @file nrf_802154_serialization_crit_sect.h
+ * @brief Critical sections for 802.15.4 serialization services.
  */
 
-#include "nrf_802154_random.h"
+#ifndef NRF_802154_SERIALIZATION_CRIT_SECT_H__
+#define NRF_802154_SERIALIZATION_CRIT_SECT_H__
 
-#include <stdlib.h>
 #include <stdint.h>
 
-#include "nrf.h"
+/** @brief Enters a critical section.
+ *
+ * @param[out]  p_critical_section  Pointer to an interger that stores the state of the critical
+ *                                  section before it is entered.
+ */
+void nrf_802154_serialization_crit_sect_enter(uint32_t * p_critical_section);
 
-#if RAAL_SOFTDEVICE
+/** @brief Exits a critical section.
+ *
+ * @param[in]  critical_section  Integer that stores the state of the critical section latched
+ *                               upon entering it.
+ */
+void nrf_802154_serialization_crit_sect_exit(uint32_t critical_section);
 
-#if defined (__GNUC__)
-_Pragma("GCC diagnostic push")
-_Pragma("GCC diagnostic ignored \"-Wreturn-type\"")
-_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")
-_Pragma("GCC diagnostic ignored \"-Wpedantic\"")
-#endif
-
-#include <nrf_soc.h>
-
-#if defined (__GNUC__)
-_Pragma("GCC diagnostic pop")
-#endif
-
-#endif // RAAL_SOFTDEVICE
-
-void nrf_802154_random_init(void)
-{
-    uint32_t seed;
-
-#if RAAL_SOFTDEVICE
-    uint32_t result;
-
-    do
-    {
-        result = sd_rand_application_vector_get((uint8_t *)&seed, sizeof(seed));
-    }
-    while (result != NRF_SUCCESS);
-#else // RAAL_SOFTDEVICE
-    NRF_RNG->TASKS_START = 1;
-
-    while (!NRF_RNG->EVENTS_VALRDY);
-    NRF_RNG->EVENTS_VALRDY = 0;
-    NRF_RNG->TASKS_STOP    = 1;
-
-    seed = NRF_RNG->VALUE;
-#endif // RAAL_SOFTDEVICE
-
-    srand((unsigned int)seed);
-}
-
-void nrf_802154_random_deinit(void)
-{
-    // Intentionally empty
-}
-
-uint32_t nrf_802154_random_get(void)
-{
-    return (uint32_t)rand();
-}
+#endif // NRF_802154_SERIALIZATION_CRIT_SECT_H__
