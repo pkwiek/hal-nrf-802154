@@ -1,5 +1,4 @@
 set(NRF_802154_DRIVER_INCLUDE_DIRS
-  ${NRF_802154_DRIVER_ROOT}/src
   ${NRF_802154_DRIVER_ROOT}/src/platform/random
 )
 

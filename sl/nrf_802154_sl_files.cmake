@@ -12,13 +12,15 @@ set(NRF_802154_SL_OPENSOURCE_INCLUDE_DIRS
 )
 
 set(NRF_802154_SL_SOURCES_NRF52
-  ${NRF_802154_SL_ROOT}/open/src/platform/gpiote/nrf_802154_gpiote_crit_sect.c
-  ${NRF_802154_SL_ROOT}/open/src/platform/hp_timer/nrf_802154_hp_timer.c
-  ${NRF_802154_SL_ROOT}/open/src/platform/lp_timer/nrf_802154_lp_timer.c
+  ${NRF_802154_SL_ROOT}/platform/gpiote/nrf_802154_gpiote_crit_sect.c
+  ${NRF_802154_SL_ROOT}/platform/hp_timer/nrf_802154_hp_timer.c
+  ${NRF_802154_SL_ROOT}/platform/lp_timer/nrf_802154_lp_timer.c
 )
 
 set(NRF_802154_SL_SOURCES_NRF53
-  ${NRF_802154_SL_ROOT}/open/src/platform/gpiote/nrf_802154_gpiote_crit_sect.c
+  ${NRF_802154_SL_ROOT}/platform/gpiote/nrf_802154_gpiote_crit_sect.c
 )
 
-set(NRF_802154_SL_INCLUDE_DIRS "")
+#TODO is different set of includes needed?
+set(NRF_802154_SL_INCLUDE_DIRS
+  ${NRF_802154_SL_ROOT}/include)
