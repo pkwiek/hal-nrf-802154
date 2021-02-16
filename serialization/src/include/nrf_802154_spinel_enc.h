@@ -42,7 +42,7 @@
 #ifndef NRF_802154_SPINEL_ENC_H_
 #define NRF_802154_SPINEL_ENC_H_
 
-#include "../spinel_base/spinel.h"
+#include "spinel.h"
 #include "nrf_802154_spinel.h"
 
 #ifdef __cplusplus

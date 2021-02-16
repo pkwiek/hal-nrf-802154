@@ -37,7 +37,7 @@
 
 #include "nrf_802154_const.h"
 
-#include "../spinel_base/spinel.h"
+#include "spinel.h"
 #include "nrf_802154_spinel_datatypes.h"
 #include "nrf_802154_spinel_dec.h"
 #include "nrf_802154_spinel_enc_net.h"

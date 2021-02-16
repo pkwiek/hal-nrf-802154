@@ -42,7 +42,7 @@
 #ifndef NRF_802154_SPINEL_DATATYPES_H_
 #define NRF_802154_SPINEL_DATATYPES_H_
 
-#include "../spinel_base/spinel.h"
+#include "spinel.h"
 
 #ifdef __cplusplus
 extern "C" {

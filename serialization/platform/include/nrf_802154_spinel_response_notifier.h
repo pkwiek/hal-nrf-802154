@@ -45,7 +45,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "../spinel_base/spinel.h"
+#include "spinel.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -36,7 +36,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "../spinel_base/spinel.h"
+#include "spinel.h"
 #include "nrf_802154_spinel_dec.h"
 #include "nrf_802154_serialization_error.h"
 
