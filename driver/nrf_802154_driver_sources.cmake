@@ -1,6 +1,6 @@
 set(NRF_802154_DRIVER_INCLUDE_DIRS
-  #TODO why is that?
-  ${NRF_802154_DRIVER_ROOT}/src/platform/random
+  ${NRF_802154_DRIVER_ROOT}/include
+  ${NRF_802154_DRIVER_ROOT}/platform/include
 )
 
 set(NRF_802154_DRIVER_SOURCES_COMMON
