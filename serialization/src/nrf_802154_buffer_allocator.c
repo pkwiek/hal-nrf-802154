@@ -39,7 +39,7 @@
 
 #include "nrf_802154_buffer_allocator.h"
 
-#include "nrf_802154_serialization_crit_sect.h"
+#include "platform/nrf_802154_serialization_crit_sect.h"
 
 #include <assert.h>
 #include <inttypes.h>

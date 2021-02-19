@@ -38,7 +38,7 @@
 
 #include "nrf_802154_kvmap.h"
 
-#include "nrf_802154_serialization_crit_sect.h"
+#include "platform/nrf_802154_serialization_crit_sect.h"
 
 #include <stdint.h>
 #include <string.h>

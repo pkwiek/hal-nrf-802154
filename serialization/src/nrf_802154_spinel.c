@@ -39,9 +39,9 @@
 
 #include "../spinel_base/spinel.h"
 #include "nrf_802154_spinel_dec.h"
-#include "nrf_802154_spinel_backend.h"
-#include "nrf_802154_spinel_log.h"
-#include "nrf_802154_spinel_response_notifier.h"
+#include "platform/nrf_802154_spinel_backend.h"
+#include "platform/nrf_802154_spinel_log.h"
+#include "platform/nrf_802154_spinel_response_notifier.h"
 #include "nrf_802154_serialization_error.h"
 #include "nrf_802154_serialization_error_helper.h"
 #include "nrf_802154_buffer_mgr_dst.h"
