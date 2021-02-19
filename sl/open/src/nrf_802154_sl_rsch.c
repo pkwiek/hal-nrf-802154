@@ -37,7 +37,8 @@
 #include <nrf.h>
 
 #include "rsch/nrf_802154_rsch.h"
-#include "platform/clock/nrf_802154_clock.h"
+#include "platform/nrf_802154_clock.h"
+#include "platform/nrf_802154_clock.h"
 
 static rsch_prio_t m_prev_prio;
 static bool        m_ready;

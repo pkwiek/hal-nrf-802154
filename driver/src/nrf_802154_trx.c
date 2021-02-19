@@ -57,7 +57,8 @@
 #include "nrf_802154_procedures_duration.h"
 #include "nrf_802154_critical_section.h"
 #include "mpsl_fem_protocol_api.h"
-#include "platform/irq/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
 
 #include "nrf_802154_sl_ant_div.h"
 

@@ -40,15 +40,18 @@
  *
  */
 
-#include "platform/lp_timer/nrf_802154_lp_timer.h"
+#include "platform/nrf_802154_lp_timer.h"
+#include "platform/nrf_802154_lp_timer.h"
 
 #include <assert.h>
 
 #include "nrf.h"
 #include "hal/nrf_rtc.h"
 
-#include "platform/clock/nrf_802154_clock.h"
-#include "platform/irq/nrf_802154_irq.h"
+#include "platform/nrf_802154_clock.h"
+#include "platform/nrf_802154_clock.h"
+#include "platform/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
 #include "nrf_802154_sl_config.h"
 #include "nrf_802154_sl_periphs.h"
 #include "nrf_802154_sl_utils.h"

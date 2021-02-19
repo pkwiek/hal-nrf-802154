@@ -76,8 +76,10 @@
 #include "rsch/nrf_802154_rsch_crit_sect.h"
 #include "timer/nrf_802154_timer_coord.h"
 #include "timer/nrf_802154_timer_sched.h"
-#include "platform/hp_timer/nrf_802154_hp_timer.h"
-#include "platform/irq/nrf_802154_irq.h"
+#include "platform/nrf_802154_hp_timer.h"
+#include "platform/nrf_802154_hp_timer.h"
+#include "platform/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
 
 #include "nrf_802154_core_hooks.h"
 #include "nrf_802154_sl_ant_div.h"

@@ -43,7 +43,8 @@
  *
  */
 
-#include "platform/gpiote/nrf_802154_gpiote.h"
+#include "platform/nrf_802154_gpiote.h"
+#include "platform/nrf_802154_gpiote.h"
 
 #include <assert.h>
 #include <stdbool.h>

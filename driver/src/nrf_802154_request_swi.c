@@ -55,7 +55,8 @@
 #include "nrf_802154_utils.h"
 #include "hal/nrf_radio.h"
 #include "hal/nrf_egu.h"
-#include "platform/irq/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
 
 #include <nrf.h>
 

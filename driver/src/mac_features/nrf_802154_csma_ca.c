@@ -56,7 +56,8 @@
 #include "nrf_802154_request.h"
 #include "nrf_802154_stats.h"
 #include "mac_features/nrf_802154_frame_parser.h"
-#include "platform/random/nrf_802154_random.h"
+#include "platform/nrf_802154_random.h"
+#include "platform/nrf_802154_random.h"
 #include "rsch/nrf_802154_rsch.h"
 #include "timer/nrf_802154_timer_sched.h"
 

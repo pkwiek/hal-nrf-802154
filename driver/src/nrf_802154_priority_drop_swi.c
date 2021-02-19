@@ -47,7 +47,8 @@
 
 #include "nrf_802154_swi.h"
 #include "hal/nrf_egu.h"
-#include "platform/clock/nrf_802154_clock.h"
+#include "platform/nrf_802154_clock.h"
+#include "platform/nrf_802154_clock.h"
 
 #define HFCLK_STOP_INT   NRF_EGU_INT_TRIGGERED1   ///< Label of HFClk stop interrupt.
 #define HFCLK_STOP_TASK  NRF_EGU_TASK_TRIGGER1    ///< Label of HFClk stop task.

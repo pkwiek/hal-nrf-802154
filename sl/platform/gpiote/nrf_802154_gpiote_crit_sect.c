@@ -38,11 +38,13 @@
  *   critical section abstraction.
  */
 
-#include "platform/gpiote/nrf_802154_gpiote.h"
+#include "platform/nrf_802154_gpiote.h"
+#include "platform/nrf_802154_gpiote.h"
 
 #include "hal/nrf_gpio.h"
 #include "nrf_802154_sl_utils.h"
-#include "platform/irq/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
+#include "platform/nrf_802154_irq.h"
 
 static volatile bool     m_gpiote_irq_enabled;      ///< Whether the GPIOTE interrupt was turned on before entering the first critical section.
 static volatile uint32_t m_gpiote_irq_disabled_cnt; ///< Counter of how many times GPIOTE interrupt was disabled while entering critical section.

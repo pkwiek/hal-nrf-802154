@@ -42,7 +42,8 @@
 #include "nrf.h"
 #include <stdint.h>
 
-#include "platform/temperature/nrf_802154_temperature.h"
+#include "platform/nrf_802154_temperature.h"
+#include "platform/nrf_802154_temperature.h"
 
 #if defined(NRF52_SERIES)
 

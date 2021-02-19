@@ -42,7 +42,7 @@
 
 #define _POSIX_C_SOURCE 1 // Enable access to POSIX functions (rand_r is not from the std library)
 
-#include "nrf_802154_random.h"
+#include "platform/nrf_802154_random.h"
 
 #include <stdlib.h>
 #include <stdint.h>

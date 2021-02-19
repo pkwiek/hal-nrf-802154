@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 - 2021, Nordic Semiconductor ASA
+ * Copyright (c) 2021, Nordic Semiconductor ASA
  * All rights reserved.
  *
  * SPDX-License-Identifier: BSD-3-Clause
@@ -32,69 +32,9 @@
  *
  */
 
-/**
- * @file
- *   This file implements the pseudo-random number generator abstraction layer.
- *
- * This pseudo-random number abstraction layer uses standard library rand() function.
- *
- */
+#include "nrf_802154_sl_capabilities.h"
 
-#include "platform/nrf_802154_random.h"
-
-#include <stdlib.h>
-#include <stdint.h>
-
-#include "nrf.h"
-
-#if RAAL_SOFTDEVICE
-
-#if defined (__GNUC__)
-_Pragma("GCC diagnostic push")
-_Pragma("GCC diagnostic ignored \"-Wreturn-type\"")
-_Pragma("GCC diagnostic ignored \"-Wunused-parameter\"")
-_Pragma("GCC diagnostic ignored \"-Wpedantic\"")
-#endif
-
-#include <nrf_soc.h>
-
-#if defined (__GNUC__)
-_Pragma("GCC diagnostic pop")
-#endif
-
-#endif // RAAL_SOFTDEVICE
-
-void nrf_802154_random_init(void)
+nrf_802154_sl_capabilities_t nrf_802154_sl_capabilities_get(void)
 {
-    uint32_t seed;
-
-#if RAAL_SOFTDEVICE
-    uint32_t result;
-
-    do
-    {
-        result = sd_rand_application_vector_get((uint8_t *)&seed, sizeof(seed));
-    }
-    while (result != NRF_SUCCESS);
-#else // RAAL_SOFTDEVICE
-    NRF_RNG->TASKS_START = 1;
-
-    while (!NRF_RNG->EVENTS_VALRDY);
-    NRF_RNG->EVENTS_VALRDY = 0;
-    NRF_RNG->TASKS_STOP    = 1;
-
-    seed = NRF_RNG->VALUE;
-#endif // RAAL_SOFTDEVICE
-
-    srand((unsigned int)seed);
-}
-
-void nrf_802154_random_deinit(void)
-{
-    // Intentionally empty
-}
-
-uint32_t nrf_802154_random_get(void)
-{
-    return (uint32_t)rand();
+    return 0;
 }
